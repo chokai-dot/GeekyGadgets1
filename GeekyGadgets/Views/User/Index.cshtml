@@ -1,0 +1,12 @@
+﻿@using GeekyGadgets.Domain.Entity;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div>
+        <h2>Welcome, @UserManager.GetUserName(User)!</h2>
+      
+    </div>
+}

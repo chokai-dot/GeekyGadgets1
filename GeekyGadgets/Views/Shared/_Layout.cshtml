@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Geeky Gadgets</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/slick.min.css" />
+    <link rel="stylesheet" href="~/css/slick-theme.min.css" />
+    <link rel="stylesheet" href="~/css/animate.min.css" /> 
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery-3.6.0.min.js"></script>
+    <script src="~/js/popper.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/slick.min.js"></script>
+    <script src="~/js/wow.min.js"></script>
+    <script src="<https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js>"></script>
+    <script src="<https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js>"></script>
+    <script src="<https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js>"></script>
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Geeky Gadgets</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Смартфоны</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ноутбуки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Аксессуары</a>
+                    </li>
+                </ul>
+                @if(!User.Identity.IsAuthenticated){
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="User" asp-action="Login"><i class="fa fa-shopping-cart"></i> Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="User" asp-action="Register"><i class="fa fa-shopping-cart"></i> Заргестрироваться</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i> Корзина</a>
+                        </li>
+                    </ul>
+                }
+                else{
+                
+                    <div>
+                        Привет, @User.Identity.Name!
+                        <form asp-action="Logout" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-link">Выйти</button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    </nav>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <h1>привет</h1>
+    }
+    else
+    {
+        <h1>пока</h1>
+    }
+    <div class="container-fluid mt-3">
+        @RenderBody()
+    </div>
+    <script>
+        $('.carousel').slick({
+            autoplay:true,
+            autoplaySpeed:5000,
+            dots:true,
+        });
+        new WOW().init();
+    </script>
+</body>
+</html>
+
+
