@@ -1,0 +1,88 @@
+﻿@model GeekyGadgets.Domain.ViewModels.Smartphone.SmartphoneViewModel
+
+@{
+    ViewData["Title"] = "Save";
+}
+@{
+    var textTitle = Model?.Id == 0 ? "Изменение данных" : "Добавление данных";
+}
+
+
+<form asp-action="Save" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Brand">Brand</label>
+        <input asp-for="@Model.Brand" class="form-control" />
+        <span asp-validation-for="@Model.Brand" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Model">Model</label>
+        <input asp-for="@Model.Model" class="form-control" />
+        <span asp-validation-for="@Model.Model" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Color">Color</label>
+        <input asp-for="@Model.Color" class="form-control" />
+        <span asp-validation-for="@Model.Color" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Storage">Storage</label>
+        <input asp-for="@Model.Storage" class="form-control" />
+        <span asp-validation-for="@Model.Storage" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.RAM">RAM</label>
+        <input asp-for="@Model.RAM" class="form-control" />
+        <span asp-validation-for="@Model.RAM" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Display">Display</label>
+        <input asp-for="@Model.Display" class="form-control" />
+        <span asp-validation-for="@Model.Display" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.RearCamera">Rear Camera</label>
+        <input asp-for="@Model.RearCamera" class="form-control" />
+        <span asp-validation-for="@Model.RearCamera" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.FrontCamera">Front Camera</label>
+        <input asp-for="@Model.FrontCamera" class="form-control" />
+        <span asp-validation-for="@Model.FrontCamera" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Battery">Battery</label>
+        <input asp-for="@Model.Battery" class="form-control" />
+        <span asp-validation-for="@Model.Battery" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Processor">Processor</label>
+        <input asp-for="@Model.Processor" class="form-control" />
+        <span asp-validation-for="@Model.Processor" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.OS">Operating System</label>
+        <input asp-for="@Model.OS" class="form-control" />
+        <span asp-validation-for="@Model.OS" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Dimensions">Dimensions</label>
+        <input asp-for="@Model.Dimensions" class="form-control" />
+        <span asp-validation-for="@Model.Dimensions" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Weight">Weight</label>
+        <input asp-for="@Model.Weight" class="form-control" />
+        <span asp-validation-for="@Model.Weight" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Price">Price</label>
+        <input asp-for="@Model.Price" class="form-control" />
+        <span asp-validation-for="@Model.Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Avatar">Avatar</label>
+        <input asp-for="@Model.Avatar" type="file" class="form-control-file" />
+        <span asp-validation-for="@Model.Avatar" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

@@ -55,7 +55,8 @@ namespace GeekyGadgets.Service.Implementations
                     OS = smartphone.OS,
                     Dimensions = smartphone.Dimensions,
                     Weight = smartphone.Weight,
-                    Price = smartphone.Price
+                    Price = smartphone.Price,
+                    Image=smartphone.Avatar,
                 };
 
                 return new BaseResponse<SmartphoneViewModel>()
@@ -96,7 +97,9 @@ namespace GeekyGadgets.Service.Implementations
                     OS = x.OS,
                     Dimensions = x.Dimensions,
                     Weight = x.Weight,
-                    Price = x.Price
+                    Price = x.Price,
+                    
+                    
                 })
                 .Where(x => EF.Functions.Like(x.Brand, $"%{term}%") || EF.Functions.Like(x.Model, $"%{term}%"))
                 .ToDictionaryAsync(x => x.Id, t => t.Brand + " " + t.Model);
@@ -217,7 +220,7 @@ namespace GeekyGadgets.Service.Implementations
                 smartphone.Dimensions = model.Dimensions;
                 smartphone.Weight = model.Weight;
                 smartphone.Price = model.Price;
-
+                
                 await _smartphoneRepository.Update(smartphone);
 
                 return new BaseResponse<Smartphone>()

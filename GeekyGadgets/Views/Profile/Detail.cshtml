@@ -1,0 +1,56 @@
+﻿@model GeekyGadgets.Domain.ViewModels.Profile.ProfileViewModel
+
+<br />
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <form id="profileFormId">
+                    <input asp-for="Id" hidden="hidden" />
+                    <h5 class="card-title">Данные профиля</h5>
+                    <div class="mb-3">
+                        <label class="form-label text-black-50">Возраст</label>
+                        <input type="text" class="form-control" asp-for="Age">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-black-50">Адрес</label>
+                        <textarea class="form-control" asp-for="Address" rows="3"></textarea>
+                    </div>
+                    <div class="card-buttons-group">
+                        <button class='btn btn-primary' id='saveProfileId'>Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+        $('#saveProfileId').on('click', function () {
+            const data = $('#profileFormId').serialize();
+            $.ajax({
+                url: '@Url.Action("Save", "Profile")',
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Информация',
+                        text: response.description,
+                        icon: 'success',
+                        confirmButtonText: 'Окей'
+                    })
+                },
+                failure: function (response) {
+                    Swal.fire({
+                        title: 'Информация',
+                        text: response.description,
+                        icon: 'error',
+                        confirmButtonText: 'Окей'
+                    })
+                }
+            });
+        });
+    </script>
+}

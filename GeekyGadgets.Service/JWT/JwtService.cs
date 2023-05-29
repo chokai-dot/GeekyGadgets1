@@ -1,5 +1,6 @@
 ﻿using GeekyGadgets.Domain.Entity;
 using GeekyGadgets.Service.Interfaces;
+using GeekyGadgets.Service.JWT;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -10,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Automarket.Service.JWT
+namespace GeekyGadgets.Service.JWT
 {
     public class JwtService : IJwtService
     {

@@ -64,6 +64,10 @@ namespace GeekyGadgets.Domain.ViewModels.Smartphone
             [Required(ErrorMessage = "Price is required.")]
             [DataType(DataType.Currency)]
             public decimal Price { get; set; }
-        }
+
+            public IFormFile Avatar { get; set; }
+
+            public byte[]? Image { get; set; }
+    }
     }
 

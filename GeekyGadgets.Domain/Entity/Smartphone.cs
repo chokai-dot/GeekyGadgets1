@@ -23,6 +23,6 @@ namespace GeekyGadgets.Domain.Entity
         public string Dimensions { get; set; }
         public string Weight { get; set; }
         public decimal Price { get; set; }
-        public byte[] Avatar { get; set; }
+        public byte[]? Avatar { get; set; }
     }
 }

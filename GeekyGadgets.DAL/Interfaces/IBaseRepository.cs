@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GeekyGadgets.DAL.Interfaces
@@ -12,5 +13,6 @@ namespace GeekyGadgets.DAL.Interfaces
         Task Delete(T entity);
 
         Task<T> Update(T entity);
+
     }
 }

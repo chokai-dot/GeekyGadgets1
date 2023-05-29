@@ -1,4 +1,5 @@
-﻿using Automarket.DAL;
+﻿
+using GeekyGadgets.DAL.Interfaces;
 using GeekyGadgets.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GeekyGadgets.DAL.Repositories
 {
-    public class SmartphoneRepository
+    public class SmartphoneRepository : IBaseRepository<Smartphone>
     {
         private readonly ApplicationDbContext _db;
 

@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/slick.min.css" />
     <link rel="stylesheet" href="~/css/slick-theme.min.css" />
-    <link rel="stylesheet" href="~/css/animate.min.css" /> 
+    <link rel="stylesheet" href="~/css/animate.min.css" />
     <link href="~/css/site.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery-3.6.0.min.js"></script>
+    <script src="~/js/modal.js"></script>
     <script src="~/js/popper.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/js/slick.min.js"></script>
     <script src="~/js/wow.min.js"></script>
-    <script src="<https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js>"></script>
-    <script src="<https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js>"></script>
-    <script src="<https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js>"></script>
-    @RenderSection("scripts", required: false)
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,7 +34,7 @@
                         <a class="nav-link" href="#">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Смартфоны</a>
+                        <a class="nav-link" asp-controller="Smartphone" asp-action="GetSmartphones">Смартфоны</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Ноутбуки</a>
@@ -40,53 +42,86 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Аксессуары</a>
                     </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link paragraphLayout active text-black" asp-controller="User" asp-action="GetUsers" style="font-family:'Comic Sans MS'; font-weight: bold;">
+                                Админ
+                            </a>
+                        </li>
+                    }
                 </ul>
-                @if(!User.Identity.IsAuthenticated){
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Basket" asp-action="Detail">
+                        <svg style="color: black;" xmlns="http://www.w3.org/2000/svg" width="37" height="37" fill="currentColor" class="bi bi-basket2-fill" viewBox="0 0 16 16">
+                            <path d="M5.929 1.757a.5.5 0 1 0-.858-.514L2.217 6H.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h.623l1.844 6.456A.75.75 0 0 0 3.69 15h8.622a.75.75 0 0 0 .722-.544L14.877 8h.623a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1.717L10.93 1.243a.5.5 0 1 0-.858.514L12.617 6H3.383L5.93 1.757zM4 10a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zm4-1a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1z" />
+                        </svg>
+                    </a>
+
+                    <a asp-controller="Profile" asp-action="Detail">
+                        <svg style="color: black;" xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                        </svg>
+                    </a>
+
+                    <form method="post" asp-controller="Account" asp-action="Logout">
+                        <input class="btn btn-danger rounded" style="font-family:'Comic Sans MS'; font-weight: bold; font-size:20px;" type="submit" value="Выход" />
+                    </form>
+                }
+                @if (!User.Identity.IsAuthenticated)
+                {
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="User" asp-action="Login"><i class="fa fa-shopping-cart"></i> Войти</a>
+                            <a class="nav-link" asp-controller="Account" asp-action="Authenticate"><i class="fa fa-shopping-cart"></i> Войти</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="User" asp-action="Register"><i class="fa fa-shopping-cart"></i> Заргестрироваться</a>
+                            <a class="nav-link" asp-controller="Account" asp-action="Register"><i class="fa fa-shopping-cart"></i> Зарегистрироваться</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i> Корзина</a>
-                        </li>
+                      
                     </ul>
                 }
-                else{
                 
-                    <div>
-                        Привет, @User.Identity.Name!
-                        <form asp-action="Logout" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-link">Выйти</button>
-                        </form>
-                    </div>
-                }
             </div>
         </div>
     </nav>
 
-    @if (!User.Identity.IsAuthenticated)
-    {
-        <h1>привет</h1>
-    }
-    else
-    {
-        <h1>пока</h1>
-    }
     <div class="container-fluid mt-3">
         @RenderBody()
     </div>
+    <div class="modal fade" id="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Информация</h5>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-close btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <button type="button" class="btn btn-primary" id="saveBtn">Сохранить</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        $('.carousel').slick({
-            autoplay:true,
-            autoplaySpeed:5000,
-            dots:true,
+        $(document).ready(function () {
+            $('.carousel').slick({
+                autoplay: true,
+                autoplaySpeed: 5000,
+                dots: true,
+                arrows: false,
+                fade: true,
+                cssEase: 'linear'
+            });
+
+            new WOW().init();
         });
-        new WOW().init();
     </script>
+
+
 </body>
 </html>
-
-

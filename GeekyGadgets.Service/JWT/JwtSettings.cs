@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Automarket.Service.JWT
+namespace GeekyGadgets.Service.JWT
 {
     public class JwtSettings
     {

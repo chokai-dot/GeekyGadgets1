@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Mvc;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model GeekyGadgets.Domain.ViewModels.Account.AuthenticateRequest
+
+
+<h1>Вход</h1>
+
+
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        @Html.ValidationSummary()
+    </div>
+}
+
+<form asp-action="Authenticate" method="post">
+    @Html.AntiForgeryToken() <!-- Вот здесь добавляем AntiForgeryToken -->
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Войти</button>
+</form>

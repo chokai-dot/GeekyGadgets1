@@ -1,0 +1,172 @@
+﻿@using GeekyGadgets.Domain.ViewModels.Smartphone
+@model List<GeekyGadgets.Domain.Entity.Smartphone>
+@{
+    ViewBag.Title = "Список смартфонов";
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <h1 class="text-center mt-4">Список смартфонов</h1>
+    <hr>
+    <div class="card col-md-12" style="margin: 10px;">
+        <div class="card-buttons-group">
+            <button class='btn btn-primary' id='compareBtnId'>Сравнение</button>
+            @if (User.IsInRole("Admin"))
+            {
+                <button class='btn btn-success' id='addSmartphoneId'>Добавить</button>
+            }
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var smartphone in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(smartphone?.Avatar ?? Array.Empty<byte>())" class="card-img-top " style="max-height: 4000px;" alt="Smartphone Image">
+                        <div class="card-body">
+                            <h5 class="card-title">@smartphone.Brand</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@smartphone.Model</h6>
+                            <p class="card-text">Цена: @smartphone.Price ₽</p>
+                            <p class="card-text">Цвет: @smartphone.Color</p>
+                            <div class="card-buttons-group">
+                                <button asp-controller="Order" asp-action="CreateOrder" method="post" class="btn btn-primary btn-block"
+                                        В корзину
+                                </button>
+                                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal" onclick="openModal({ url: '/Smartphone/GetSmartphone', data: '@smartphone.Id' })">
+                                    Показать
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-md-6">
+                <div class="alert alert-info text-center" role="alert">
+                    Список смартфонов пуст.
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger mt-4">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+</div>
+@section Scripts{
+    <script src="~/js/modal.js"></script>
+    <script>
+        $(document).ready(function () {
+            let modal = $('#modal');
+
+            $('#saveBtn').on('click', function () {
+                const smartphone = {
+                    brand: $('input#Brand').val(),
+                    model: $('input#Model').val(),
+                    price: $('input#Price').val(),
+                    description: $('input#Description').val(),
+                    image: $('input#Image').val(),
+                };
+
+                $.ajax({
+                    url: '@Url.Action("SaveSmartphone")',
+                    type: 'POST',
+                    data: JSON.stringify(smartphone),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Информация',
+                            text: response.description,
+                            icon: 'success',
+                            confirmButtonText: 'Окей'
+                        });
+                    },
+                    error: function (data) {
+                        Swal.fire({
+                            title: 'Информация',
+                            text: 'Ошибка валидации',
+                            icon: 'error',
+                            confirmButtonText: 'Окей'
+                        });
+                    }
+                });
+            });
+
+            $('#compareBtnId').on('click', function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("CompareSmartphone")',
+                    success: function (response) {
+                        $('.modal-dialog').addClass('modal-lg');
+                        modal.find('.modal-body').html(response);
+                        modal.modal('show');
+                    }
+                });
+            });
+
+            $('.btn-close').click(function () {
+                modal.modal('hide');
+            });
+
+            $('#addSmartphoneId').on('click', function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Smartphone/Save',
+                    success: function (response) {
+                        $('.modal-dialog').removeClass('modal-lg');
+                        modal.find('.modal-body').html(response);
+                        modal.modal('show');
+                    },
+                    failure: function () {
+                        modal.modal('hide');
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+<style>
+    .card {
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .card-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .card-subtitle {
+        font-size: 16px;
+        color: #777;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .card-buttons-group {
+        margin-top: 10px;
+    }
+</style>

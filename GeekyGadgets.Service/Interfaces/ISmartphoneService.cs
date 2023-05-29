@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GeekyGadgets.Service.Interfaces
 {
-    internal interface ISmartphoneService
+    public interface ISmartphoneService
     {
         //BaseResponse<Dictionary<int, string>> GetTypes();
 

@@ -1,0 +1,19 @@
+﻿@model GeekyGadgets.Domain.ViewModels.Order.OrderViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Смартфон: @Model.Brand</li>
+            <li class="list-group-item">@Model.Brand</li>
+            <li class="list-group-item">Объем памяти: @Model.Storage</li>
+        
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <ul class="list-group list-group-flush">
+           <li class="list-group-item">ФИО: @Model.FirstName @Model.LastName.Substring(0, 1) @Model.MiddleName.Substring(0, 1)</li>
+            <li class="list-group-item">Адрес: @Model.Address</li>
+            <li class="list-group-item">Дата создания: @Model.DateCreate</li>
+       </ul> 
+    </div>
+</div>

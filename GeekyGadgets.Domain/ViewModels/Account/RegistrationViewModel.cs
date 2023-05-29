@@ -11,11 +11,13 @@ namespace GeekyGadgets.Domain.ViewModels.Account
 
         [Required]
         [EmailAddress]
+        [RegularExpression(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", ErrorMessage = "Некорректный формат email")]
         public string Email { get; set; }
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Укажите пароль")]
-        [MinLength(6, ErrorMessage = "Пароль должен иметь длину больше 6 символов")]
+        [MinLength(8, ErrorMessage = "Пароль должен содержать не менее 8 символов")]
+        [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", ErrorMessage = "Некорректный формат пароля")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
